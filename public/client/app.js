@@ -40,4 +40,4 @@ window.Shortly = Backbone.View.extend({
 });
 
 //this is a comment
-//this is a COMMENT
+//this is a comment 
