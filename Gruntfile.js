@@ -26,7 +26,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-
+          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         sepperator: ';'
       },
       dist: {
-        src: ['app/**/*.js', 'db/shortly.sqlite', 'lib/**/*.js', 'public/client/**/*.js', 'public/**/*.png', 'public/**/*.gif', 'public/**/*.css', 'test/**/*.js', 'views/**/*.js', 'views/**/*.json', 'views/**/*.md', 'views/**/*.gitignore', 'views/**/*.eslintignore'],
+        src: ['public/client/**/*.js'],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
@@ -70,6 +70,7 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: 'git push live master'
       }
     },
   });
@@ -92,16 +93,17 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
-    'mochaTest'
+    'mochaTest', 'eslint'
   ]);
 
   grunt.registerTask('build', [
-
+    'concat', 'uglify'
   ]);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run(['shell']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
@@ -109,9 +111,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'build', 'test', 'upload'
   ]);
 
 
 };
 //Comment on your mom goes here!
+//your momma is so....
 //another comment about your mom!
