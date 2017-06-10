@@ -9,7 +9,7 @@ var usersSchema = mongoose.Schema({
 });
 
 
-var User = mongoose.model('User', userSchema);
+var User = mongoose.model('User', usersSchema);
 
 User.comparePassword = function(candidatePassword, savedPassword, cb) {
   bcrypt.compare(candidatePassword, savedPassword, function(err, isMatch) {
@@ -19,7 +19,7 @@ User.comparePassword = function(candidatePassword, savedPassword, cb) {
 };
 
 
-userSchema.pre('save', function(next) {
+usersSchema.pre('save', function(next) {
   var cipher = Promise.promisify(bcrypt.hash);
   return cipher(this.password, null, null).bind(this)
     .then(function(hash) {

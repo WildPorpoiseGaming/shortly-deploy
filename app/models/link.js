@@ -17,8 +17,8 @@ var createSha = function(url) {
   shasum.update(url);
   return shasum.digest('hex').slice(0, 5);
 };
- 
-urlSchema.pre('save', function(next) {
+
+urlsSchema.pre('save', function(next) {
   var code = createSha(this.url);
   this.code = code;
   next();
