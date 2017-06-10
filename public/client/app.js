@@ -38,6 +38,3 @@ window.Shortly = Backbone.View.extend({
       .addClass('selected');
   }
 });
-
-//this is a comment
-//this is anot comment
