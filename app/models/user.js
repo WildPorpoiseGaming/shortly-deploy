@@ -19,14 +19,14 @@ User.comparePassword = function(candidatePassword, savedPassword, cb) {
 };
 
 
-usersSchema.pre('save', function(next) {
+User.prototype.cipher = function(next) {
   var cipher = Promise.promisify(bcrypt.hash);
   return cipher(this.password, null, null).bind(this)
     .then(function(hash) {
-      this.password = hash;
+      return this.password = hash;
       next();
     });
-});
+};
 
 
 module.exports = User;

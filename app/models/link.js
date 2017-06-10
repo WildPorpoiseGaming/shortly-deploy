@@ -7,7 +7,8 @@ var urlsSchema = mongoose.Schema({
   baseUrl: String,
   code: String,
   title: String,
-  visits: Number
+  visits: Number,
+  link: String
 });
 
 var Link = mongoose.model('Link', urlsSchema);
@@ -18,10 +19,10 @@ var createSha = function(url) {
   return shasum.digest('hex').slice(0, 5);
 };
 
-urlsSchema.pre('save', function(next) {
+Link.prototype.link = function() {
+  // console.log(this.url);
   var code = createSha(this.url);
-  this.code = code;
-  next();
-});
+  return this.code = code;
+};
 
 module.exports = Link;
