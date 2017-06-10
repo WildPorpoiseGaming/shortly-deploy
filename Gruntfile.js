@@ -2,8 +2,6 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    concat: {
-    },
 
     mochaTest: {
       test: {
@@ -21,7 +19,28 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      //write uglify
+      options: {
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+
+      },
+      dist: {
+        files: {
+          
+        }
+      }
     },
+    concat: {
+      //write concat
+      options: {
+        sepperator: ';'
+      },
+      dist: {
+        src: ['app/**/*.js', 'db/shortly.sqlite', 'lib/**/*.js', 'public/client/**/*.js', 'public/**/*.png', 'public/**/*.gif', 'public/**/*.css', 'test/**/*.js', 'views/**/*.js', 'views/**/*.json', 'views/**/*.md', 'views/**/*.gitignore', 'views/**/*.eslintignore'],
+        dest: 'dist/<%= pkg.name %>.js'
+      }
+    },
+
 
     eslint: {
       target: [
@@ -77,6 +96,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+
   ]);
 
   grunt.registerTask('upload', function(n) {
